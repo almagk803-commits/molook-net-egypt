@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ملوك النت في مصر</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f5f8fb;color:#172b3a}
+.splash{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:28px;background:linear-gradient(135deg,#0c1c2c,#164e78 65%,#1769aa);color:#fff}
+.box{width:min(680px,94%);padding:42px 24px}.logo{font-size:clamp(34px,8vw,58px);font-weight:900;line-height:1.25}.line{height:1px;background:#ffffff45;width:78%;margin:30px auto}.idea{font-size:19px;color:#dceaf3}.name{font-size:27px;font-weight:800;margin-top:8px}
+button{border:0;border-radius:10px;padding:12px 20px;background:#10243a;color:#fff;font:inherit;font-weight:800;cursor:pointer}.enter{margin-top:34px;background:#35c6a1;color:#092e35;font-size:17px;padding:14px 38px}
+.home{display:none;min-height:100vh}.nav{background:#10243a;color:#fff;padding:16px 5%;font-weight:800}.hero{padding:55px 7%;background:linear-gradient(135deg,#10243a,#1769aa);color:#fff}.hero h1{font-size:clamp(29px,6vw,40px);margin:0 0 12px}.hero p{max-width:720px;font-size:17px;color:#e2edf5}
+.section{padding:40px 7%}.section h2{margin-top:0}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:#fff;border:1px solid #e1e9ef;border-radius:16px;padding:22px;box-shadow:0 8px 25px #122d4208}.service{cursor:pointer;transition:.2s}.service:hover{transform:translateY(-3px)}
+.service button{margin-top:14px}.form{max-width:700px}.field{margin:10px 0}.field label{display:block;font-weight:700;font-size:14px;margin-bottom:5px}.field input,.field select{width:100%;padding:12px;border:1px solid #d7e1e9;border-radius:9px;font:inherit;background:#fff}.full{width:100%}
+.ok{color:#12866f;font-weight:700}.bad{color:#b33;font-weight:700}.note{color:#607383;font-size:13px}.package-info{background:#eef7f5;border-radius:10px;padding:12px;margin-top:8px;display:none}.order{background:#f8fbfd;border:1px dashed #cddce5;border-radius:12px;padding:15px;margin-top:12px}
+@media(max-width:700px){.cards{grid-template-columns:1fr}.section{padding:34px 5%}.hero{padding:45px 5%}}
+
+.package-detail-card{margin-top:14px;padding:16px;border-radius:16px;background:#fff;border:1px solid #e7e7e7;box-shadow:0 5px 18px rgba(0,0,0,.06)}
+.package-detail-title{font-size:20px;font-weight:800;margin-bottom:12px}
+.package-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.package-detail-grid div{padding:11px;border-radius:12px;background:#f7f7f7}
+.package-detail-grid span{display:block;font-size:12px;color:#777;margin-bottom:4px}
+.package-detail-grid strong{font-size:15px}
+@media(max-width:600px){.package-detail-grid{grid-template-columns:1fr}}
+
+
+.order-review-card{margin-top:16px;padding:18px;border:1px solid #e7e7e7;border-radius:18px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.order-review-card h3{margin:0 0 14px;font-size:20px}.order-review-row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid #eee}.order-review-row span{color:#777}.order-review-row strong{font-weight:800}.order-actions{display:flex;gap:10px;margin-top:15px}.order-actions button{flex:1}.order-confirmed{margin-top:16px;padding:18px;border-radius:18px;background:#f3fff7;border:1px solid #bde8cc;text-align:center}.order-confirmed .order-no{font-size:22px;font-weight:900;margin:8px 0}
+
+
+.admin-panel{margin-top:18px;padding:18px;border-radius:18px;background:#fff;border:1px solid #e5e5e5;box-shadow:0 8px 25px rgba(0,0,0,.06)}
+.admin-panel h3{margin:0 0 14px}.admin-search{display:flex;gap:8px;margin-bottom:14px}.admin-search input{flex:1}
+.order-card{padding:14px;margin:10px 0;border-radius:14px;background:#fafafa;border:1px solid #eee}.order-card .row{display:flex;justify-content:space-between;gap:10px;padding:5px 0}.order-card select{padding:8px;border-radius:10px}.order-card textarea{width:100%;margin-top:8px;min-height:55px}
+.status-badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800}
+.status-pending{background:#fff4cc}.status-progress{background:#e5f0ff}.status-done{background:#dcf8e5}.status-rejected{background:#ffe2e2}
+.track-result{margin-top:15px;padding:16px;border-radius:16px;background:#fff;border:1px solid #e5e5e5}
+
+
+#adminPanel{display:none!important}
+.admin-gate{max-width:480px;margin:20px auto;padding:22px;border:1px solid #e5e5e5;border-radius:20px;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.07)}
+.admin-gate h2{margin:0 0 8px}.admin-gate p{color:#777}.admin-gate input{width:100%;margin:7px 0;padding:12px;border:1px solid #ddd;border-radius:12px;box-sizing:border-box}.admin-gate button{width:100%;margin-top:8px}.admin-error{color:#c62828;margin-top:8px;display:none}.admin-link{display:block;text-align:center;margin:18px 0;color:#555}
+
+</style>
+
+<script>
+const rechargePricingV22 = {
+  "7.01": "10",
+  "14.01": "20",
+  "50": "71.43",
+  "100": "142.85",
+  "140.01": "200"
+};
+function getRechargeGrossV22(net){
+  return rechargePricingV22[String(net)] || String(net);
+}
+</script>
+
+</head>
+<body>
+<section class="splash" id="splash">
+<div class="box"><div class="logo">ملوك النت في مصر</div><div class="line"></div><div class="idea">فكرة شاب مصري 🇪🇬</div><div class="name">بلال حمدي العطار</div><button class="enter" onclick="openSite()">دخول إلى المنصة</button></div>
+</section>
+
+<section class="home" id="home">
+<div class="nav">ملوك النت في مصر <span style="float:left;font-weight:400;font-size:13px">منصة الخدمات</span></div>
+<div class="hero"><h1>أهلاً بك في ملوك النت في مصر</h1><p>اختار الخدمة التي تريدها وأرسل طلبك بسهولة. هذه نسخة تجريبية وليست مرتبطة بمدفوعات حقيقية حتى الآن.</p></div>
+
+<div class="section">
+<h2>الخدمات</h2>
+<div class="cards">
+<div class="card service" onclick="showRecharge()"><div style="font-size:34px">📱</div><h3>شحن رصيد</h3><p>شحن رصيد لرقمك بسهولة.</p><button>ابدأ الطلب</button></div>
+<div class="card service" onclick="showRenew()"><div style="font-size:34px">🌐</div><h3>تجديد باقة</h3><p>اختر الشبكة ثم نوع الباقة والباقتك المناسبة.</p><button>ابدأ الطلب</button></div>
+<div class="card service" onclick="showFakka()"><div style="font-size:34px">🎫</div><h3>شحن كروت فكة</h3><p>اختر الشبكة وكارت الفكة المناسب.</p><button>ابدأ الطلب</button></div>
+<div class="card service" onclick="showTrack()"><div style="font-size:34px">📋</div><h3>متابعة طلب</h3><p>اكتب رقم الهاتف فقط لمعرفة آخر طلب.</p><button>متابعة</button></div>
+</div>
+</div>
+
+<div class="section" id="formArea" style="display:none">
+<div class="card form">
+<h2 id="formTitle">طلب خدمة</h2>
+
+<div id="rechargeFields" style="display:none">
+<div class="field"><label>نوع الشبكة</label><select id="rNetwork"><option>Vodafone</option><option>Orange</option><option>Etisalat</option><option>WE</option></select></div>
+<div class="field"><label>رقم الهاتف</label><input id="rPhone" inputmode="numeric" maxlength="11" placeholder="010xxxxxxxx"></div>
+<div class="field"><label>قيمة الشحن</label><select id="rAmount"><option value="7.01">7.01 رصيد صافي — 10 جنيه شحن</option><option value="14.01">14.01 رصيد صافي — 20 جنيه شحن</option><option value="50">50 رصيد صافي — 71.43 جنيه شحن</option><option value="100">100 رصيد صافي — 142.85 جنيه شحن</option><option value="140.01">140.01 رصيد صافي — 200 جنيه شحن</option></select></div>
+<button class="full" onclick="submitRecharge()">إرسال طلب الشحن التجريبي</button>
+</div>
+
+<div id="renewFields" style="display:none">
+<div class="field"><label>نوع الشبكة</label><select id="network" onchange="loadPackages()"><option value="">اختر الشبكة</option><option value="Vodafone">Vodafone</option><option value="WE">WE</option><option value="Etisalat">Etisalat</option><option value="Orange">Orange</option></select></div>
+<div class="field"><label>رقم الهاتف</label><input id="phone" inputmode="numeric" maxlength="11" placeholder="01xxxxxxxxx"></div>
+<div class="field"><label>نوع الباقة</label><select id="package" onchange="showPackageInfo()" disabled><option>اختر الشبكة أولاً</option></select></div>
+<div class="package-info" id="packageInfo"></div>
+<button class="full" onclick="submitRenew()">إرسال طلب التجديد التجريبي</button>
+</div>
+
+
+<div id="fakkaFields" style="display:none">
+  <div class="field"><label>نوع الشبكة</label>
+    <select id="fakkaNetwork">
+      <option value="">اختر الشبكة</option>
+      <option value="Vodafone">Vodafone</option><option value="Etisalat">Etisalat</option>
+      <option value="Orange">Orange</option><option value="WE">WE</option>
+    </select>
+  </div>
+  <div class="field"><label>رقم الهاتف</label><input id="fakkaPhone" type="tel" inputmode="numeric" placeholder="01xxxxxxxxx"></div>
+  <div class="field"><label>نوع كارت الفكة</label><select id="fakkaCard"><option value="">اختر الشبكة أولاً</option></select></div>
+  <div id="fakkaInfo" class="package-detail-card" style="display:none"></div>
+  <button id="fakkaSubmit" type="button" class="full">إرسال طلب شحن كارت الفكة</button>
+  <div id="fakkaResult"></div>
+</div>
+<div id="trackFields" style="display:none">
+<div class="field"><label>رقم التليفون</label><input id="trackPhone" inputmode="numeric" maxlength="11" placeholder="01xxxxxxxxx"></div>
+<button class="full" onclick="trackOrder()">عرض حالة الطلب</button>
+<div id="trackResult"></div>
+</div>
+
+<p id="result"></p>
+<p class="note">النسخة الحالية تجريبية: لا يتم خصم أموال ولا تنفيذ عمليات شحن حقيقية.</p>
+</div>
+</div>
+</section>
+</section>
+
+<script>
+const packages={
+Vodafone:[
+["فليكس 52","مكالمات + إنترنت","1,500 فليكس","75 جنيه","30 يوم","مكالمات + إنترنت"],
+["فليكس 80","مكالمات + إنترنت","3,000 فليكس","115 جنيه","30 يوم","مكالمات + إنترنت"],
+["فليكس 115","مكالمات + إنترنت","5,000 فليكس","165 جنيه","30 يوم","مكالمات + إنترنت"],
+["فليكس 175","مكالمات + إنترنت","9,000 فليكس","250 جنيه","30 يوم","مكالمات + إنترنت"],
+["فليكس 345","مكالمات + إنترنت","21,000 فليكس","493 جنيه","30 يوم","مكالمات + إنترنت"],
+["Vodafone Plus 1400","إنترنت","1,400 ميجا","37 جنيه"],
+["Vodafone Plus 3000","إنترنت","3,000 ميجا","69 جنيه"],
+["Vodafone Plus 4750","إنترنت","4,750 ميجا","98 جنيه"],
+["Vodafone Plus 6000","إنترنت","6,000 ميجا","120 جنيه"],
+["Vodafone Plus 10000","إنترنت","10,000 ميجا","180 جنيه"],
+["Vodafone Plus 18000","إنترنت","18,000 ميجا","300 جنيه"],
+["Vodafone Plus 29000","إنترنت","29,000 ميجا","450 جنيه"],
+["Vodafone Plus 45000","إنترنت","45,000 ميجا","600 جنيه"],
+["نظام الكارت 14 قرش","مكالمات","14 قرش للدقيقة","حسب الاستهلاك"]
+],
+WE:[
+["Super Kix 29","مكالمات + إنترنت","750 كيكس","42 جنيه","28 يوم","مكالمات + إنترنت"],
+["Super Kix 37","مكالمات + إنترنت","1,000 كيكس","53 جنيه","28 يوم","مكالمات + إنترنت"],
+["Super Kix 52","مكالمات + إنترنت","1,800 كيكس","75 جنيه","28 يوم","مكالمات + إنترنت"],
+["Super Kix 69","مكالمات + إنترنت","2,800 كيكس","99 جنيه","28 يوم","مكالمات + إنترنت"],
+["Super Kix 95","مكالمات + إنترنت","4,200 كيكس","136 جنيه","28 يوم","مكالمات + إنترنت"],
+["Super Kix 120","مكالمات + إنترنت","5,500 كيكس","172 جنيه","28 يوم","مكالمات + إنترنت"],
+["Super Kix 150","مكالمات + إنترنت","6,500 كيكس","215 جنيه","28 يوم","مكالمات + إنترنت"],
+["Tazbeet 46","مكالمات + إنترنت","1,250 ميجابايت + 300 دقيقة","66 جنيه","28 يوم","مكالمات + إنترنت"],
+["Tazbeet 58","مكالمات + إنترنت","2,250 ميجابايت + 400 دقيقة","83 جنيه","28 يوم","مكالمات + إنترنت"],
+["Tazbeet 105","مكالمات + إنترنت","5,250 ميجابايت + 500 دقيقة","150 جنيه","28 يوم","مكالمات + إنترنت"],
+["Tazbeet 165","مكالمات + إنترنت","11,250 ميجابايت + 600 دقيقة","236 جنيه","28 يوم","مكالمات + إنترنت"],
+["Nitro Prime 15","إنترنت","781 ميجابايت","22 جنيه","28 يوم","إنترنت فقط"],
+["Nitro Prime 29","إنترنت","1,718 ميجابايت","42 جنيه","28 يوم","إنترنت فقط"],
+["Nitro Prime 58","إنترنت","4,062 ميجابايت","83 جنيه","28 يوم","إنترنت فقط"],
+["Nitro Prime 105","إنترنت","7,812 ميجابايت","150 جنيه","28 يوم","إنترنت فقط"],
+["Nitro Prime 150","إنترنت","12,500 ميجابايت","215 جنيه","28 يوم","إنترنت فقط"],
+["Nitro Prime 300","إنترنت","29,375 ميجابايت","429 جنيه","28 يوم","إنترنت فقط"],
+["Nitro Prime 675","إنترنت","62,500 ميجابايت","965 جنيه","3 شهور","إنترنت فقط"],
+["12 قرش — 3 ساعات","كارت","حتى 30 دقيقة","2 جنيه","3 ساعات","مكالمات"],
+["12 قرش — 24 ساعة","كارت","حتى 30 دقيقة","2 جنيه","24 ساعة","مكالمات"]
+],
+Etisalat:[
+["حكاية ميكسات 52","مكالمات + إنترنت","52 ميكس","75 جنيه","30 يوم","مكالمات + إنترنت"],
+["حكاية ميكسات 69","مكالمات + إنترنت","69 ميكس","99 جنيه","30 يوم","مكالمات + إنترنت"],
+["حكاية ميكسات 92","مكالمات + إنترنت","92 ميكس","132 جنيه","30 يوم","مكالمات + إنترنت"],
+["حكاية ميكسات 120","مكالمات + إنترنت","120 ميكس","172 جنيه","30 يوم","مكالمات + إنترنت"],
+["حكاية ميكسات 180","مكالمات + إنترنت","180 ميكس","258 جنيه","30 يوم","مكالمات + إنترنت"],
+["شحنة حكاية ميني 19","كارت","400 ميكس","28 جنيه","6 أيام","مكالمات + إنترنت"],
+["شحنة حكاية ميني 22.5","كارت","525 ميكس","33 جنيه","7 أيام","مكالمات + إنترنت"],
+["شحنة حكاية ميني 30","كارت","700 ميكس","43 جنيه","10 أيام","مكالمات + إنترنت"],
+["Super Connect 10.5","إنترنت","350 ميجابايت + 30 دقيقة","15 جنيه","28 يوم","إنترنت + دقائق"],
+["Super Connect 23","إنترنت","1,000 ميجابايت + 30 دقيقة","33 جنيه","28 يوم","إنترنت + دقائق"],
+["Super Connect 37","إنترنت","1,750 ميجابايت + 30 دقيقة","53 جنيه","28 يوم","إنترنت + دقائق"],
+["Super Connect 58","إنترنت","3,250 ميجابايت + 30 دقيقة","83 جنيه","28 يوم","إنترنت + دقائق"],
+["Super Connect 92","إنترنت","5,500 ميجابايت + 30 دقيقة","132 جنيه","28 يوم","إنترنت + دقائق"],
+["Super Connect 120","إنترنت","7,500 ميجابايت + 30 دقيقة","172 جنيه","28 يوم","إنترنت + دقائق"],
+["Super Connect 190","إنترنت","12,250 ميجابايت + 30 دقيقة","272 جنيه","28 يوم","إنترنت + دقائق"],
+["Super Connect 300","إنترنت","20,000 ميجابايت + 30 دقيقة","429 جنيه","28 يوم","إنترنت + دقائق"],
+["Super Connect 450","إنترنت","31,500 ميجابايت + 30 دقيقة","643 جنيه","28 يوم","إنترنت + دقائق"],
+["Super Connect 600","إنترنت","48,000 ميجابايت + 30 دقيقة","858 جنيه","28 يوم","إنترنت + دقائق"]
+],
+Orange:[
+["فري ماكس 52","مكالمات + إنترنت","1,500 فليكس","75 جنيه","30 يوم","مكالمات + إنترنت"],
+["فري ماكس 80","مكالمات + إنترنت","3,000 فليكس","115 جنيه","30 يوم","مكالمات + إنترنت"],
+["فري ماكس 115","مكالمات + إنترنت","5,000 فليكس","165 جنيه","30 يوم","مكالمات + إنترنت"],
+["فري ماكس 175","مكالمات + إنترنت","9,000 فليكس","250 جنيه","30 يوم","مكالمات + إنترنت"],
+["فري ماكس 230","مكالمات + إنترنت","12,800 فليكس","329 جنيه","30 يوم","مكالمات + إنترنت"],
+["فري ماكس 345","مكالمات + إنترنت","21,000 فليكس","493 جنيه","30 يوم","مكالمات + إنترنت"],
+["GO 750 ميجا","إنترنت","1,000 ميجا","23 جنيه"],
+["GO 1.4 جيجا","إنترنت","1,750 ميجا","37 جنيه"],
+["GO 2.5 جيجا","إنترنت","3,250 ميجا","58 جنيه"],
+["GO 4.25 جيجا","إنترنت","5,500 ميجا","92 جنيه"],
+["GO 6 جيجا","إنترنت","7,250 ميجا","120 جنيه"],
+["GO 10 جيجا","إنترنت","11,500 ميجا","180 جنيه"],
+["GO 18 جيجا","إنترنت","20,000 ميجا","300 جنيه"],
+["GO 29 جيجا","إنترنت","31,500 ميجا","450 جنيه"],
+["GO 45 جيجا","إنترنت","49,000 ميجا","600 جنيه"],
+["GO إضافية 500 ميجا","إضافية","500 ميجا","15 جنيه"],
+["GO إضافية 1,100 ميجا","إضافية","1,100 ميجا","29 جنيه"],
+["GO إضافية 1,250 ميجا","إضافية","1,250 ميجا","37 جنيه"],
+["GO إضافية 2,200 ميجا","إضافية","2,200 ميجا","52 جنيه"],
+["GO إضافية 3,250 ميجا","إضافية","3,250 ميجا","75 جنيه"],
+["GO إضافية 4,750 ميجا","إضافية","4,750 ميجا","98 جنيه"],
+["GO إضافية 6,000 ميجا","إضافية","6,000 ميجا","120 جنيه"],
+["GO إضافية 9,000 ميجا","إضافية","9,000 ميجا","150 جنيه"],
+["GO إضافية 12,000 ميجا","إضافية","12,000 ميجا","225 جنيه"],
+["GO إضافية 20,000 ميجا","إضافية","20,000 ميجا","375 جنيه"],
+["GO إضافية 40,000 ميجا","إضافية","40,000 ميجا","600 جنيه"],
+["GO فيديو اليومية","إضافية","200 ميجا","3 جنيه"],
+["GO فيديو الشهرية","إضافية","450 ميجا","7.5 جنيه"],
+["GO Play اليومية","إضافية","ألعاب","1 جنيه"],
+["GO Play الشهرية","إضافية","1,000 ميجا + 300 ميجا ويك إند","10 جنيه"],
+["GO @Home","إضافية","1,000 ميجا","15 جنيه"],
+["GO @Home ماكس","إضافية","4,500 ميجا","52 جنيه"]
+]};
+
+function openSite(){document.getElementById('splash').style.display='none';document.getElementById('home').style.display='block';window.scrollTo(0,0)}
+function resetForms(){
+  ["rechargeFields","renewFields","fakkaFields","trackFields"].forEach(x=>{
+    const e=document.getElementById(x); if(e) e.style.display="none";
+  });
+  document.getElementById("result").textContent="";
+  document.getElementById("trackResult").innerHTML="";
+  const fr=document.getElementById("fakkaResult"); if(fr) fr.innerHTML="";
+}
+function showRecharge(){resetForms();document.getElementById("formArea").style.display="block";document.getElementById("rechargeFields").style.display="block";document.getElementById("formTitle").textContent="شحن رصيد";document.getElementById("formArea").scrollIntoView({behavior:"smooth"})}
+function showRenew(){resetForms();document.getElementById("formArea").style.display="block";document.getElementById("renewFields").style.display="block";document.getElementById("formTitle").textContent="تجديد باقة";document.getElementById("formArea").scrollIntoView({behavior:"smooth"})}
+function showFakka(){
+ resetForms();
+ document.getElementById("formArea").style.display="block";
+ document.getElementById("fakkaFields").style.display="block";
+ document.getElementById("formTitle").textContent="شحن كروت فكة";
+ document.getElementById("formArea").scrollIntoView({behavior:"smooth"});
+}
+function showTrack(){resetForms();document.getElementById("formArea").style.display="block";document.getElementById("trackFields").style.display="block";document.getElementById("formTitle").textContent="متابعة طلب";document.getElementById("formArea").scrollIntoView({behavior:"smooth"})}
+function loadPackages(){
+ const n=document.getElementById("network").value,p=document.getElementById("package");p.innerHTML="";
+ if(!n){p.disabled=true;p.innerHTML="<option>اختر الشبكة أولاً</option>";return}
+ p.disabled=false;p.innerHTML="<option value=''>اختر الباقة</option>";
+ packages[n].forEach((x,i)=>{const o=document.createElement("option");o.value=i;o.textContent=x[0]+" — "+x[3];p.appendChild(o)})
+ document.getElementById("packageInfo").style.display="none";
+}
+function showPackageInfo(){
+ const n=document.getElementById("network").value,i=document.getElementById("package").value,box=document.getElementById("packageInfo");
+ if(i===""){box.style.display="none";return}
+ const x=packages[n][i];box.innerHTML="<b>"+x[0]+"</b><br>النوع: "+x[1]+"<br>الحجم/الوحدات: "+x[2]+"<br>السعر: "+x[3];box.style.display="block"
+}
+function validPhone(x){return /^01[0125][0-9]{8}$/.test(x)}
+let onlineOrdersCache=[];
+async function apiCreateOrder(order){
+  try{
+    const r=await fetch('/api/orders',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(order)
+    });
+    if(!r.ok) throw new Error('api');
+    const data=await r.json();
+    onlineOrdersCache=data.orders||[];
+    return data.order;
+  }catch(e){ return null; }
+}
+async function apiGetOrders(phone=''){
+  try{
+    const u=phone?('/api/orders?phone='+encodeURIComponent(phone)):'/api/orders';
+    const r=await fetch(u);
+    if(!r.ok) throw new Error('api');
+    const data=await r.json();
+    onlineOrdersCache=data.orders||[];
+    return onlineOrdersCache;
+  }catch(e){
+    try{return JSON.parse(localStorage.getItem("molookOrders")||"[]")}catch(_){return[]}
+  }
+}
+function getNextOrderNumber(){
+  const orders=JSON.parse(localStorage.getItem("molookOrders")||"[]");
+  let counter=parseInt(localStorage.getItem("molookOrderCounter")||"0",10);
+  if(!Number.isFinite(counter)) counter=0;
+  const numericMax=orders.reduce((m,o)=>{const n=parseInt(o.orderNumber||o.orderNo,10);return Number.isFinite(n)?Math.max(m,n):m},0);
+  const next=Math.max(counter,numericMax,orders.length)+1;
+  localStorage.setItem("molookOrderCounter",String(next));
+  return String(next);
+}
+function getTotalOrderCount(){
+  return onlineOrdersCache.length || JSON.parse(localStorage.getItem("molookOrders")||"[]").length;
+}
+async function saveOrder(order){
+  const saved=await apiCreateOrder(order);
+  if(saved){
+    localStorage.setItem("molookLastOrder_"+saved.phone,JSON.stringify(saved));
+    localStorage.setItem("molookLastOrder",JSON.stringify(saved));
+    return saved;
+  }
+  const orders=JSON.parse(localStorage.getItem("molookOrders")||"[]");
+  const normalized={...order,orderNo:order.orderNo||getNextOrderNumber(),orderNumber:order.orderNumber||order.orderNo,createdAt:new Date().toISOString()};
+  orders.unshift(normalized);
+  localStorage.setItem("molookOrders",JSON.stringify(orders));
+  localStorage.setItem("molookLastOrder_"+normalized.phone,JSON.stringify(normalized));
+  localStorage.setItem("molookLastOrder",JSON.stringify(normalized));
+  onlineOrdersCache=orders;
+  return normalized;
+}
+async function submitRecharge(){
+ const phone=document.getElementById("rPhone").value.trim(),r=document.getElementById("result");
+ if(!validPhone(phone)){r.className="bad";r.textContent="من فضلك أدخل رقم هاتف مصري صحيح.";return}
+ const order={orderNo:getNextOrderNumber(),orderNumber:undefined,phone,network:document.getElementById("rNetwork").value,packageName:"شحن رصيد "+document.getElementById("rAmount").value,units:"—",service:"شحن رصيد",price:getRechargeGrossV22(document.getElementById("rAmount").value),netAmount:document.getElementById("rAmount").value,validity:"—",status:"قيد المراجعة",type:"شحن رصيد"};
+ const saved=await saveOrder(order);
+ r.className="ok";r.textContent="تم تسجيل الطلب رقم "+saved.orderNo+" — إجمالي الطلبات: "+getTotalOrderCount();
+}
+function submitRenew(){
+ const phone=document.getElementById("phone").value.trim(),n=document.getElementById("network").value,i=document.getElementById("package").value,r=document.getElementById("result");
+ if(!n||i===""){r.className="bad";r.textContent="اختر الشبكة ونوع الباقة أولاً.";return}
+ if(!validPhone(phone)){r.className="bad";r.textContent="من فضلك أدخل رقم هاتف مصري صحيح.";return}
+ const x=packages[n][i],order={orderNo:"MLK-"+new Date().toISOString().slice(0,10).replace(/-/g,"")+"-"+String(Date.now()).slice(-4),phone,network:n,packageName:x[0],service:x[5]||x[1],units:x[2],validity:x[4]||"",price:x[3],status:"قيد المراجعة",type:"تجديد باقة"};
+ saveOrder(order);r.className="ok";r.textContent="تم تسجيل طلب التجديد التجريبي رقم "+order.orderNo+" — إجمالي الطلبات: "+getTotalOrderCount();
+}
+function trackOrder(){
+ const phone=document.getElementById("trackPhone").value.trim(),box=document.getElementById("trackResult");
+ if(!validPhone(phone)){box.innerHTML='<p class="bad">من فضلك أدخل رقم هاتف مصري صحيح.</p>';return}
+ const orders=JSON.parse(localStorage.getItem("molookOrders")||"[]");
+ const o=orders.find(x=>x.phone===phone);
+ if(!o){box.innerHTML='<div class="order"><b>لا يوجد طلب مسجل بهذا الرقم.</b></div>';return}
+ box.innerHTML='<div class="order"><b>رقم الطلب:</b> '+(o.orderNo||o.id)+'<br><b>الشبكة:</b> '+o.network+'<br><b>الخدمة:</b> '+o.service+'<br><b>الباقة:</b> '+o.packageName+'<br>'+((o.units&&o.units!=="—")?'<b>التفاصيل:</b> '+o.units+'<br>':'')+(o.price?'<b>قيمة الشحن:</b> '+o.price+'<br>':'')+'<b>الحالة:</b> <span class="ok">'+o.status+'</span></div>'
+}
+
+function showSelectedPackageDetails(pkg, network){
+  const box = document.getElementById('packageDetails');
+  if(!box || !pkg) return;
+  const service = pkg[5] || pkg[1] || "مكالمات + إنترنت";
+  const units = pkg[2] || "—";
+  const price = pkg[3] || "—";
+  const validity = pkg[4] || "—";
+  box.innerHTML = `
+    <div class="package-detail-card">
+      <div class="package-detail-title">${pkg[0]}</div>
+      <div class="package-detail-grid">
+        <div><span>قيمة الشحن الإلكتروني</span><strong>${price}</strong></div>
+        <div><span>الباقة تمنحك</span><strong>${units}</strong></div>
+        <div><span>الصلاحية</span><strong>${validity}</strong></div>
+        <div><span>نوع الخدمة</span><strong>${service}</strong></div>
+      </div>
+    </div>`;
+  box.style.display = 'block';
+}
+
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+ const ns=document.getElementById('networkSelect'), ps=document.getElementById('packageSelect');
+ const phone=document.querySelector('input[type="tel"]');
+ if(!ns||!ps) return;
+ const host=ps.parentElement;
+ const review=document.createElement('div'); review.id='orderReview'; review.style.display='none'; host.after(review);
+ const done=document.createElement('div'); done.id='orderConfirmed'; done.style.display='none'; review.after(done);
+ function show(){
+   const pkg=packages[ns.value]?.[Number(ps.value)]; if(!pkg)return;
+   const phoneVal=phone?.value.trim()||"";
+   review.innerHTML=`<div class="order-review-card"><h3>مراجعة الطلب</h3>
+   <div class="order-review-row"><span>الشبكة</span><strong>${ns.options[ns.selectedIndex].text}</strong></div>
+   <div class="order-review-row"><span>رقم الهاتف</span><strong>${phoneVal||"لم يتم إدخال الرقم"}</strong></div>
+   <div class="order-review-row"><span>الباقة</span><strong>${pkg[0]}</strong></div>
+   <div class="order-review-row"><span>الحجم / الوحدات</span><strong>${pkg[2]||"—"}</strong></div>
+   <div class="order-review-row"><span>الخدمة</span><strong>${pkg[5]||pkg[1]||"—"}</strong></div>
+   <div class="order-review-row"><span>الصلاحية</span><strong>${pkg[4]||"—"}</strong></div>
+   <div class="order-review-row"><span>قيمة الشحن الإلكتروني</span><strong>${pkg[3]||"—"}</strong></div>
+   <div class="order-actions"><button type="button" id="confirmOrderBtn">✅ تأكيد الطلب</button><button type="button" id="editOrderBtn">✏️ تعديل الطلب</button></div></div>`;
+   review.style.display='block'; done.style.display='none';
+   document.getElementById('editOrderBtn').onclick=()=>{review.style.display='none';ps.focus()};
+   document.getElementById('confirmOrderBtn').onclick=async()=>{
+     const p=phone?.value.trim()||""; if(!p){alert("من فضلك أدخل رقم الهاتف أولاً.");phone?.focus();return}
+     const order={orderNo:getNextOrderNumber(),phone:p,network:ns.value,packageName:pkg[0],units:pkg[2],service:pkg[5]||pkg[1],validity:pkg[4],price:pkg[3],status:"قيد المراجعة",type:"تجديد باقة"};
+     const saved=await saveOrder(order);
+     review.style.display='none'; done.innerHTML=`<div class="order-confirmed">✅ تم استلام طلبك<div class="order-no">${saved.orderNo}</div>الحالة الحالية: <strong>قيد المراجعة</strong><br>إجمالي الطلبات المسجلة حتى الآن: <strong>${getTotalOrderCount()}</strong><br>احتفظ برقم الطلب لمتابعته.</div>`; done.style.display='block';
+   };
+ }
+ ps.addEventListener('change',()=>setTimeout(show,50));
+});
+</script>
+
+
+<script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const inputs=[...document.querySelectorAll('input')];
+  const trackSection=inputs.find(i=>(i.placeholder||'').includes('رقم') || (i.name||'').toLowerCase().includes('phone'));
+  if(!trackSection)return;
+  const parent=trackSection.parentElement;
+  if(!parent || document.getElementById('connectedTracking'))return;
+  const box=document.createElement('div'); box.id='connectedTracking'; box.className='track-result'; box.style.display='none'; parent.appendChild(box);
+  const btn=document.createElement('button'); btn.type='button'; btn.textContent='🔎 متابعة الطلب'; btn.style.marginTop='10px'; parent.appendChild(btn);
+  btn.onclick=async()=>{
+    const phone=trackSection.value.trim();
+    if(!phone){box.textContent='من فضلك أدخل رقم الهاتف.';box.style.display='block';return}
+    const list=await apiGetOrders(phone);
+    const found=list.find(o=>o.phone===phone) || JSON.parse(localStorage.getItem('molookLastOrder_'+phone)||'null');
+    if(!found){box.innerHTML='لم يتم العثور على طلب بهذا الرقم.';box.style.display='block';return}
+    box.innerHTML=`<strong>رقم الطلب: ${found.orderNo}</strong>
+      <div>الشبكة: ${found.network||'—'}</div>
+      <div>الخدمة: ${found.service||'—'}</div>
+      <div>الباقة: ${found.packageName||'—'}</div>
+      <div>قيمة الشحن الإلكتروني: ${found.price||'—'}</div>
+      <div>الحالة: <strong>${found.status||'قيد المراجعة'}</strong></div>
+      ${found.note?`<div>ملاحظة: ${found.note}</div>`:''}`;
+    box.style.display='block';
+  };
+});
+</script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const s=document.getElementById('rAmount');
+  if(!s || document.getElementById('rechargeLiveV22')) return;
+  const box=document.createElement('div');
+  box.id='rechargeLiveV22';
+  box.style.cssText='margin-top:10px;padding:14px;border-radius:14px;background:#eef8ff;font-weight:700;line-height:1.9';
+  s.after(box);
+  const update=()=>{
+    const net=s.value;
+    const gross=getRechargeGrossV22(net);
+    box.innerHTML=`الرصيد الصافي: <strong>${net}</strong> جنيه<br>قيمة الشحن الإلكتروني: <strong>${gross}</strong> جنيه`;
+  };
+  s.addEventListener('change',update);
+  update();
+});
+</script>
+
+
+<script>
+const fakkaCatalogV23={
+ Vodafone:[
+  {name:"كارت فكة 15",price:"15",units:"300 وحدة",validity:"يومين"},
+  {name:"كارت فكة 19",price:"19",units:"425 وحدة",validity:"6 أيام"},
+  {name:"كارت فكة 22.5",price:"22.5",units:"550 وحدة",validity:"7 أيام"},
+  {name:"كارت فكة 30",price:"30",units:"750 وحدة",validity:"10 أيام"}
+ ],
+ Etisalat:[
+  {name:"كارت فكة 15",price:"15",units:"300 ميكس/دقيقة/ميجا",validity:"يومين"},
+  {name:"كارت فكة 19",price:"19",units:"425 ميكس/دقيقة/ميجا",validity:"6 أيام"},
+  {name:"كارت فكة 22.5",price:"22.5",units:"550 ميكس/دقيقة/ميجا",validity:"7 أيام"},
+  {name:"كارت فكة 30",price:"30",units:"750 ميكس/دقيقة/ميجا",validity:"10 أيام"},
+  {name:"كارت فكة 44",price:"44",units:"1100 ميكس/دقيقة",validity:"14 يوم"},
+  {name:"كارت فكة 45",price:"45",units:"700 ميكس/دقيقة",validity:"28 يوم"},
+  {name:"كارت فكة 75",price:"75",units:"1300 ميكس/دقيقة",validity:"28 يوم"}
+ ],
+ Orange:[
+  {name:"كارت فكة 15",price:"15",units:"300 وحدة",validity:"يومين"},
+  {name:"كارت فكة 19",price:"19",units:"425 وحدة",validity:"6 أيام"},
+  {name:"كارت فكة 22.5",price:"22.5",units:"550 وحدة",validity:"7 أيام"},
+  {name:"كارت فكة 30",price:"30",units:"750 وحدة",validity:"10 أيام"}
+ ],
+ WE:[
+  {name:"كارت فكة 15",price:"15",units:"300 وحدة",validity:"يومين"},
+  {name:"كارت فكة 19",price:"19",units:"425 وحدة",validity:"6 أيام"},
+  {name:"كارت فكة 22.5",price:"22.5",units:"550 وحدة",validity:"7 أيام"},
+  {name:"كارت فكة 30",price:"30",units:"750 وحدة",validity:"10 أيام"}
+ ]
+};
+document.addEventListener("DOMContentLoaded",()=>{
+ const n=document.getElementById("fakkaNetwork"),c=document.getElementById("fakkaCard");
+ if(!n||!c)return;
+ n.onchange=()=>{
+  c.innerHTML='<option value="">اختر كارت الفكة</option>';
+  (fakkaCatalogV23[n.value]||[]).forEach((x,i)=>c.innerHTML+=`<option value="${i}">${x.name} — ${x.price} جنيه</option>`);
+  document.getElementById("fakkaInfo").style.display="none";
+ };
+ c.onchange=()=>{
+  const x=(fakkaCatalogV23[n.value]||[])[Number(c.value)],box=document.getElementById("fakkaInfo");
+  if(!x){box.style.display="none";return}
+  box.style.display="block";
+  box.innerHTML=`<div class="package-detail-title">${x.name}</div><div class="package-detail-grid">
+  <div><span>قيمة الكارت</span><strong>${x.price} جنيه</strong></div>
+  <div><span>الوحدات</span><strong>${x.units}</strong></div>
+  <div><span>الصلاحية</span><strong>${x.validity}</strong></div>
+  <div><span>الشبكة</span><strong>${n.value}</strong></div></div>`;
+ };
+ document.getElementById("fakkaSubmit").onclick=async()=>{
+  const phone=document.getElementById("fakkaPhone").value.trim(),x=(fakkaCatalogV23[n.value]||[])[Number(c.value)];
+  if(!n.value||!phone||!x){alert("من فضلك اختر الشبكة وأدخل رقم الهاتف واختر كارت الفكة.");return}
+  const order={orderNo:getNextOrderNumber(),phone,network:n.value,packageName:x.name,units:x.units,service:"شحن كروت فكة",validity:x.validity,price:x.price,status:"قيد المراجعة",type:"شحن كروت فكة"};
+  const saved=await saveOrder(order);
+  document.getElementById("fakkaResult").innerHTML=`<div class="order"><b>تم استلام الطلب ✅</b><br>رقم الطلب: <strong>${saved.orderNo}</strong><br>الحالة: <span class="ok">قيد المراجعة</span><br>إجمالي الطلبات المسجلة: <strong>${getTotalOrderCount()}</strong></div>`;
+ };
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded',async()=>{
+  try{const r=await fetch('/api/health'); if(r.ok){const el=document.createElement('div');el.textContent='● النظام متصل';el.style.cssText='position:fixed;bottom:10px;left:10px;background:#168a55;color:#fff;padding:6px 10px;border-radius:20px;font-size:11px;z-index:9999';document.body.appendChild(el)}}catch(e){}
+});
+</script></body></html>
