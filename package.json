@@ -1,0 +1,12 @@
+{
+  "name": "molook-net-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "منصة ملوك النت في مصر - نسخة تشغيل بخادم وقاعدة بيانات ملفات",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
