@@ -9,7 +9,7 @@ const HOST = process.env.HOST || '0.0.0.0';
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';
 const ADMIN_PASS = process.env.ADMIN_PASS || '1234';
 const ROOT = __dirname;
-const PUBLIC = path.join(ROOT, 'public');
+const const PUBLIC = ROOT;
 const DB = path.join(ROOT, 'data.json');
 
 let db = { nextNumber: 1, orders: [] };
